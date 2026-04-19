@@ -1,0 +1,31 @@
+@use "../abstracts" as *;
+
+.detail-view {
+  color: $color-text-2;
+
+  &__image {
+    height: 360px;
+    width: 420px;
+    max-width: 100%;
+  }
+
+  &__region {
+    @include text-lead;
+    margin-bottom: 1.5rem;
+  }
+
+  &__desciption {
+    font-size: 0.875rem;
+  }
+
+  &__subtitle {
+    @include text-lead;
+  }
+
+  @include mobile {
+    &__image {
+      height: 200px;
+      width: 100%;
+    }
+  }
+}
