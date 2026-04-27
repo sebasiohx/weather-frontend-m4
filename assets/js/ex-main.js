@@ -1241,10 +1241,15 @@ function pronosticoHTML(region) {
   }
 
   return pronosticoRotado
-    .map((dia) => {
+    .map((dia, index) => {
+      const fechaParaEsteDia = new Date();
+      // Uso +1 porque tu pronosticoRotado empieza desde "mañana"
+      fechaParaEsteDia.setDate(hoy.getDate() + (index + 1));
+      const diaCalculado = fechaParaEsteDia.getDate();
+
       return `
     <li class="forecast__list-item ${vistaClass} list-group-item">
-      <p class="forecast__day mb-0">${dia.siglas}</p>
+      <p class="forecast__day mb-0">${dia.siglas} ${diaCalculado}</p>
       <div class="forecast__climates">
         <i class="fa-solid ${dia.climaDia.icono} tc-primary" title="${dia.climaDia.texto}"></i> /
         <i class="fa-solid ${dia.climaNoche.icono} tc-primary" title="${dia.climaNoche.texto}"></i>

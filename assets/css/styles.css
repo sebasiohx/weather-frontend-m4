@@ -121,6 +121,22 @@
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
 }
+.regions-card__current-climate {
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.regions-card__min-max {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
 .nav-weather {
   background-color: #2fd5ff;
@@ -129,6 +145,9 @@
 .nav-weather__input {
   border: 1px solid #243870;
   color: #243870;
+}
+.nav-weather__input--error {
+  border: 1px solid red;
 }
 .nav-weather__btn-search {
   background-color: #243870;

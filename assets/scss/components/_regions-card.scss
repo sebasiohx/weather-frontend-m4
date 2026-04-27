@@ -19,4 +19,16 @@
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
   }
+
+  &__current-climate {
+    font-weight: weight(bold);
+    line-height: 1;
+    @include flex-center(row, baseline);
+    justify-content: space-between;
+  }
+
+  &__min-max {
+    @include flex-center(row, baseline);
+    justify-content: space-between;
+  }
 }
