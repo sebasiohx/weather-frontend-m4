@@ -53,16 +53,16 @@
               >
             </li>
           </ul>
-          <form id="formBusqueda" class="d-flex" role="search">
+          <form id="form-busqueda" class="d-flex" role="search">
             <input
-              id="inputBusqueda"
+              id="input-busqueda"
               class="nav-weather__input form-control me-2"
               type="search"
               placeholder="Buscar ciudad"
               aria-label="Buscar"
             />
             <button
-              id="btnBusqueda"
+              id="btn-busqueda"
               class="nav-weather__btn-search btn btn-primary"
               type="submit"
             >
@@ -73,10 +73,75 @@
       </div>
     </nav>
 
-    <header
-      id="hero-section"
-      class="hero-section py-5 px-2 px-md-0 rounded"
-    ></header>
+    <header id="hero-section" class="hero-section py-5 px-2 px-md-0 rounded">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 offset-md-1">
+            <div class="row d-flex flex-md-row g-3">
+              <div class="col-md-6">
+                <article class="card p-4 hero-card">
+                  <div class="row g-2">
+                    <div class="col-12">
+                      <div class="hero-card__inner-card p-2 align-items-start">
+                        <!-- h2Ciudad -->
+                        <h2 id="nombre-ciudad-hero" class="fw-bolder mb-1"></h2>
+                        <!-- h2Region -->
+                        <h2
+                          id="nombre-region-hero"
+                          class="hero-card__region"
+                        ></h2>
+                      </div>
+                    </div>
+
+                    <div class="col-6 col-lg-5">
+                      <div class="hero-card__inner-card">
+                        <div class="ms-1">
+                          <!-- h1Temperatura -->
+                          <h1
+                            id="cifra-temperatura-hero"
+                            class="display-2 fw-bold lh-1 mb-2 tc-accent"
+                          ></h1>
+                          <!-- h3MinMax -->
+                          <h3
+                            id="min-max-temperatura-hero"
+                            class="ms-1 text-body-emphasis"
+                          ></h3>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-6 col-lg-4">
+                      <!-- divEstadoClimatico -->
+                      <div
+                        id="card-estado-climatico"
+                        class="hero-card__inner-card gap-3 h-100"
+                      ></div>
+                    </div>
+                    <!-- divColFecha -->
+                    <div
+                      id="container-fecha-hero"
+                      class="col-12 text-center text-md-start"
+                    ></div>
+                  </div>
+                </article>
+              </div>
+
+              <div class="col-md-6">
+                <article>
+                  <div class="card p-3 mb-3 hero-card">
+                    <h5 class="mb-0">Pronóstico siguientes 7 días</h5>
+                  </div>
+                  <!-- divCardPronostico -->
+                  <div id="card-pronostico" class="card p-4 hero-card">
+                    <ul class="list-group forecast"></ul>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
 
     <main class="d-flex flex-column flex-grow-1">
       <section id="vista-home" class="py-4 py-md-5">

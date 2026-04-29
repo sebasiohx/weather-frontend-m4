@@ -1,7 +1,7 @@
 /* referencias DOM */
 const body = document.querySelector("body");
-const formularioBusqueda = document.querySelector("#formBusqueda");
-const inputBusqueda = document.querySelector("#inputBusqueda");
+const formularioBusqueda = document.querySelector("#form-busqueda");
+const inputBusqueda = document.querySelector("#input-busqueda");
 const heroSection = document.querySelector("#hero-section");
 const vistaHome = document.querySelector("#vista-home");
 const regionesContainer = document.querySelector("#regiones-container");
@@ -23,6 +23,74 @@ const diasSemana = [
 const hoy = new Date();
 // para detectar que dia de la semana es hoy
 const nombreDiaHoy = diasSemana[hoy.getDay()];
+
+/* Funciones */
+/**
+ * Función para imprimir la fecha con un formato legible
+ * @param {Date} fecha
+ */
+function imprimirFecha(fecha) {
+  const fechaLiteral = fecha
+    .toLocaleDateString("es-ES", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    })
+    .replace(",", "");
+
+  // para imprimir la fecha con la primera letra en mayusculas
+  return fechaLiteral[0].toUpperCase() + fechaLiteral.slice(1);
+}
+/**
+ * Funcion para renderizar la seccion Hero
+ */
+function renderizarHero() {
+  const rm = regionesChile.find((ciudad) => ciudad.nombreCiudad === "Santiago");
+
+  const h2Ciudad = document.querySelector("#nombre-ciudad-hero");
+  const iconoCiudad = document.createElement("i");
+  iconoCiudad.className = "fa-solid fa-location-dot tc-primary";
+  const nombreCiudad = document.createElement("span");
+  nombreCiudad.textContent = rm.nombreCiudad;
+  h2Ciudad.append(iconoCiudad, " ", nombreCiudad);
+
+  const h2Region = document.querySelector("#nombre-region-hero");
+  const nombreRegion = document.createTextNode(rm.nombreRegion);
+  h2Region.append(nombreRegion);
+
+  const h1CifraTempreatura = document.querySelector("#cifra-temperatura-hero");
+  const cifraTemperaturaActual = document.createTextNode(`${rm.tempActual}°`);
+  h1CifraTempreatura.append(cifraTemperaturaActual);
+
+  const h3MinMax = document.querySelector("#min-max-temperatura-hero");
+  const cifrasMinMax = document.createTextNode(
+    `${rm.tempMinima}° / ${rm.tempMaxima}°`,
+  );
+  h3MinMax.append(cifrasMinMax);
+
+  const divEstadoClimatico = document.querySelector("#card-estado-climatico");
+  const iconoEstadoClimatico = document.createElement("i");
+  iconoEstadoClimatico.className = `fa-solid ${rm.estadoClimaticoActual.icono} display-1 tc-primary`;
+  const textoEstadoClimatico = document.createElement("span");
+  textoEstadoClimatico.className = "badge bgc-accent";
+  textoEstadoClimatico.textContent = rm.estadoClimaticoActual.texto;
+  divEstadoClimatico.append(iconoEstadoClimatico, textoEstadoClimatico);
+
+  const divColFecha = document.querySelector("#container-fecha-hero");
+  const h4Fecha = document.createElement("h4");
+  h4Fecha.className = "hero-card__date";
+  h4Fecha.textContent = `${imprimirFecha(hoy)}*`;
+  const btnDetalleHero = document.createElement("button");
+  btnDetalleHero.type = "button";
+  btnDetalleHero.id = "btn-hero";
+  btnDetalleHero.className = "btn hero-card__btn-action btn-lg";
+  btnDetalleHero.dataset.id = rm.id;
+  btnDetalleHero.textContent = "Ver detalles";
+  divColFecha.append(h4Fecha, btnDetalleHero);
+
+  const divCardPronostico = document.querySelector("#card-pronostico");
+}
 
 /**
  * Funcion para crear una card
@@ -141,6 +209,7 @@ function buscarCiudad() {
   renderizarCards(listaFiltrada);
 }
 
+// evento buscador
 formularioBusqueda.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -168,4 +237,5 @@ inputBusqueda.addEventListener("input", (e) => {
   }
 });
 
+renderizarHero();
 renderizarCards(regionesChile);
