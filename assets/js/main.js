@@ -43,6 +43,63 @@ function imprimirFecha(fecha) {
   return fechaLiteral[0].toUpperCase() + fechaLiteral.slice(1);
 }
 /**
+ * Función para renderizar el pronostico con elementos de lista
+ * @param {Object} region
+ */
+function renderizarPronostico(region) {
+  // para buscar el indice del elemento donde el nombre de los dias coincida
+  const indiceDiaHoyRegion = region.pronosticoSemanal.findIndex(
+    (dia) => dia.dia === nombreDiaHoy,
+  );
+
+  const pronosticoRotado = [
+    ...region.pronosticoSemanal.slice(indiceDiaHoyRegion + 1),
+    ...region.pronosticoSemanal.slice(0, indiceDiaHoyRegion + 1),
+  ];
+
+  let vistaClass = "";
+  if (body.classList.contains("body--detail")) {
+    vistaClass = "forecast__list-item--detail";
+  } else {
+    vistaClass = "forecast__list-item--home";
+  }
+
+  const listaElementosPronostico = pronosticoRotado.map((dia, index) => {
+    const fechaParaEsteDia = new Date();
+    // Uso +1 porque tu pronosticoRotado empieza desde "mañana"
+    fechaParaEsteDia.setDate(hoy.getDate() + (index + 1));
+    const diaCalculado = fechaParaEsteDia.getDate();
+
+    const liItemPronostico = document.createElement("li");
+    liItemPronostico.className = `forecast__list-item ${vistaClass} list-group-item`;
+
+    const pFecha = document.createElement("p");
+    pFecha.className = "forecast__day mb-0";
+    pFecha.textContent = `${dia.siglas} ${diaCalculado}`;
+
+    const divClimas = document.createElement("div");
+    divClimas.className = "forecast__climates";
+
+    const iconoClimaDia = document.createElement("i");
+    iconoClimaDia.className = `fa-solid ${dia.climaDia.icono} tc-primary`;
+    iconoClimaDia.title = dia.climaDia.texto;
+    const iconoClimaNoche = document.createElement("i");
+    iconoClimaNoche.className = `fa-solid ${dia.climaNoche.icono} tc-primary`;
+    iconoClimaNoche.title = dia.climaNoche.texto;
+    divClimas.append(iconoClimaDia, " / ", iconoClimaNoche);
+
+    const pTemperaturas = document.createElement("p");
+    pTemperaturas.className = "forecast__temperatures mb-0";
+    pTemperaturas.textContent = `${dia.tempMin}°/${dia.tempMax}°`;
+
+    liItemPronostico.append(pFecha, divClimas, pTemperaturas);
+
+    return liItemPronostico;
+  });
+
+  return listaElementosPronostico;
+}
+/**
  * Funcion para renderizar la seccion Hero
  */
 function renderizarHero() {
@@ -90,6 +147,11 @@ function renderizarHero() {
   divColFecha.append(h4Fecha, btnDetalleHero);
 
   const divCardPronostico = document.querySelector("#card-pronostico");
+  // <ul class="list-group forecast"></ul>
+  const ulListaPronostico = document.createElement("ul");
+  ulListaPronostico.className = "list-group forecast";
+  ulListaPronostico.append(...renderizarPronostico(rm));
+  divCardPronostico.append(ulListaPronostico);
 }
 
 /**
@@ -181,10 +243,10 @@ function crearCard(ciudad) {
  * @param {Array} ciudades
  */
 function renderizarCards(ciudades) {
-  ciudades.forEach((ciudad) => {
+  for (const ciudad of ciudades) {
     const card = crearCard(ciudad);
     regionesContainer.append(card);
-  });
+  }
 }
 
 /**
