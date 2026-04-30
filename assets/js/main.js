@@ -42,6 +42,7 @@ function imprimirFecha(fecha) {
   // para imprimir la fecha con la primera letra en mayusculas
   return fechaLiteral[0].toUpperCase() + fechaLiteral.slice(1);
 }
+
 /**
  * Función para renderizar el pronostico con elementos de lista
  * @param {Object} region
@@ -49,7 +50,7 @@ function imprimirFecha(fecha) {
 function renderizarPronostico(region) {
   // para buscar el indice del elemento donde el nombre de los dias coincida
   const indiceDiaHoyRegion = region.pronosticoSemanal.findIndex(
-    (dia) => dia.dia === nombreDiaHoy,
+    (dia) => dia.nombreDia === nombreDiaHoy,
   );
 
   const pronosticoRotado = [
@@ -99,6 +100,7 @@ function renderizarPronostico(region) {
 
   return listaElementosPronostico;
 }
+
 /**
  * Funcion para renderizar la seccion Hero
  */
@@ -146,8 +148,11 @@ function renderizarHero() {
   btnDetalleHero.textContent = "Ver detalles";
   divColFecha.append(h4Fecha, btnDetalleHero);
 
+  btnDetalleHero.addEventListener("click", () =>
+    mostrarDetalle(+btnDetalleHero.dataset.id),
+  );
+
   const divCardPronostico = document.querySelector("#card-pronostico");
-  // <ul class="list-group forecast"></ul>
   const ulListaPronostico = document.createElement("ul");
   ulListaPronostico.className = "list-group forecast";
   ulListaPronostico.append(...renderizarPronostico(rm));
@@ -271,6 +276,244 @@ function buscarCiudad() {
   renderizarCards(listaFiltrada);
 }
 
+/**
+ * Función para renderizar la seccion Detalle con la info de cada ciudad
+ * @param {Number} id
+ */
+function renderizarDetalle(id) {
+  const regionData = regionesChile.find((region) => region.id === id);
+
+  if (!regionData) {
+    const tituloNoData = document.createElement("h2");
+    tituloNoData.textContent = "No se encontró la ciudad";
+    detalleContainer.append(tituloNoData);
+    return;
+  }
+
+  // Limpiar todos los contenedores antes de renderizar
+  document.querySelector("#datos-container-1").textContent = "";
+  document.querySelector("#img-ciudad-detalle").textContent = "";
+  document.querySelector("#datos-container-2").textContent = "";
+  document.querySelector("#datos-container-3").textContent = "";
+  document.querySelector("#datos-container-4").textContent = "";
+  document.querySelector("#pronostico-detalle").textContent = "";
+
+  //==============================================
+  const divDatosContainer1 = document.querySelector("#datos-container-1");
+
+  const h2CiudadDetalle = document.createElement("h2");
+  h2CiudadDetalle.className = "fw-bolder mb-1";
+  const iconoPuntero = document.createElement("i");
+  iconoPuntero.className = "fa-solid fa-location-dot tc-primary";
+  const nombreCiudad = regionData.nombreCiudad;
+  h2CiudadDetalle.append(iconoPuntero, nombreCiudad);
+
+  const h5RegionDetalle = document.createElement("h5");
+  h5RegionDetalle.className = "detail-view__region";
+  const nombreRegion = regionData.nombreRegion;
+  h5RegionDetalle.append(nombreRegion);
+
+  const pResumenDetalle = document.createElement("p");
+  pResumenDetalle.className = "detail-view__description mb-4";
+  pResumenDetalle.textContent = regionData.descripcion;
+
+  divDatosContainer1.append(h2CiudadDetalle, h5RegionDetalle, pResumenDetalle);
+
+  //==============================================
+  const imgCiudadDetalle = document.querySelector("#img-ciudad-detalle");
+
+  const imgCiudad = document.createElement("img");
+  imgCiudad.className = "detail-view__image object-fit-cover rounded";
+  imgCiudad.src = `./assets/img/${regionData.img}`;
+  imgCiudad.alt = `Ciudad ${regionData.nombreCiudad}`;
+  imgCiudadDetalle.append(imgCiudad);
+
+  //==============================================
+  const divDatosContainer2 = document.querySelector("#datos-container-2");
+
+  const pSubtituloTemperatura = document.createElement("p");
+  pSubtituloTemperatura.className = "detail-view__subtitle mb-2";
+  pSubtituloTemperatura.textContent = "Temperatura actual";
+
+  const h3TemperaturaActualDetalle = document.createElement("h3");
+  h3TemperaturaActualDetalle.className =
+    "display-3 fw-bold lh-1 mb-2 d-flex justify-content-between align-items-baseline";
+  const spanTemperaturaActual = document.createElement("span");
+  spanTemperaturaActual.className = "tc-primary";
+  spanTemperaturaActual.textContent = `${regionData.tempActual}°`;
+  const iconoEstadoClimaActual = document.createElement("i");
+  iconoEstadoClimaActual.className = `fa-solid ${regionData.estadoClimaticoActual.icono} display-5 mt-3`;
+  h3TemperaturaActualDetalle.append(
+    spanTemperaturaActual,
+    iconoEstadoClimaActual,
+  );
+
+  const divMinMaxEstadoDetalle = document.createElement("div");
+  divMinMaxEstadoDetalle.className =
+    "ms-1 mb-0 d-flex align-items-baseline justify-content-between";
+  const pMinMAx = document.createElement("p");
+  const iconoFlechaMenor = document.createElement("i");
+  iconoFlechaMenor.className = "fa-solid fa-arrow-down";
+  const iconoFlechaMayor = document.createElement("i");
+  iconoFlechaMayor.className = "fa-solid fa-arrow-up";
+  pMinMAx.append(
+    iconoFlechaMenor,
+    `${regionData.tempMinima}°`,
+    " / ",
+    iconoFlechaMayor,
+    `${regionData.tempMaxima}°`,
+  );
+  const pEstadoClimaActual = document.createElement("p");
+  const spanEstadoClimaActual = document.createElement("span");
+  spanEstadoClimaActual.className = "badge bgc-primary tc-accent";
+  spanEstadoClimaActual.textContent = regionData.estadoClimaticoActual.texto;
+  pEstadoClimaActual.append(spanEstadoClimaActual);
+  divMinMaxEstadoDetalle.append(pMinMAx, pEstadoClimaActual);
+
+  divDatosContainer2.append(
+    pSubtituloTemperatura,
+    h3TemperaturaActualDetalle,
+    divMinMaxEstadoDetalle,
+  );
+
+  //==============================================
+  const divDatosContainer3 = document.querySelector("#datos-container-3");
+
+  const divVientoDetalle = document.createElement("div");
+  const h5VientoDetalle = document.createElement("h5");
+  const iconoViento = document.createElement("i");
+  iconoViento.className = "fa-solid fa-wind";
+  h5VientoDetalle.append(iconoViento, " Viento");
+  const pVelocidadViento = document.createElement("p");
+  pVelocidadViento.textContent = `${regionData.viento} km/h`;
+  divVientoDetalle.append(h5VientoDetalle, pVelocidadViento);
+
+  const divHumedadDetalle = document.createElement("div");
+  const h5HumedadDetalle = document.createElement("h5");
+  const iconoHumedad = document.createElement("i");
+  iconoHumedad.className = "fa-solid fa-water";
+  h5HumedadDetalle.append(iconoHumedad, " Humedad");
+  const pPorcentajeHumedad = document.createElement("p");
+  pPorcentajeHumedad.textContent = `${regionData.humedad}%`;
+  divHumedadDetalle.append(h5HumedadDetalle, pPorcentajeHumedad);
+
+  divDatosContainer3.append(divVientoDetalle, divHumedadDetalle);
+
+  //==============================================
+  const divDatosContainer4 = document.querySelector("#datos-container-4");
+
+  const h5SubtituloResumenSemana = document.createElement("h5");
+  h5SubtituloResumenSemana.className = "detail-view__subtitle";
+  h5SubtituloResumenSemana.textContent = "Resumen del clima semanal";
+
+  const pResumenCLimaDetalle = document.createElement("p");
+  pResumenCLimaDetalle.textContent = `Semana fría mayormente con lluvias.`; //PENDIENTE
+
+  const h4SubtituloEstadisticas = document.createElement("h4");
+  h4SubtituloEstadisticas.className = "detail-view__subtitle";
+  h4SubtituloEstadisticas.textContent = "Estadísticas de la semana";
+
+  const ulEstaditicasDetalle = document.createElement("ul"); //PENDIENTE
+  ulEstaditicasDetalle.className = "list-group list-group-horizontal mb-3";
+  const temperaturasEstadisticas = [
+    { etiqueta: "Temp. mínima", valor: 22 },
+    { etiqueta: "Temp. máxima", valor: 32 },
+    { etiqueta: "Temp. promedio", valor: 20 },
+  ];
+  temperaturasEstadisticas.forEach(({ etiqueta, valor }) => {
+    const li = document.createElement("li");
+    li.className = "list-group-item detail-view__list-item";
+    li.textContent = `${etiqueta}: ${valor}°`;
+    ulEstaditicasDetalle.append(li);
+  });
+
+  const h4SubtituloCantidadDias = document.createElement("h4");
+  h4SubtituloCantidadDias.className = "detail-view__subtitle";
+  h4SubtituloCantidadDias.textContent = "Cantidad de días por tipo de clima";
+
+  const ulDiasPorClima = document.createElement("ul"); //PENDIENTE
+  ulDiasPorClima.className = "list-group list-group-horizontal mb-4";
+  const diasPorClimas = [
+    { clima: "Soleado", icono: "fa-sun", cantDias: 3 },
+    { clima: "Nublado", icono: "fa-sun", cantDias: 2 },
+    { clima: "Lluvioso", icono: "fa-sun", cantDias: 1 },
+  ];
+  diasPorClimas.forEach(({ clima, icono, cantDias }) => {
+    const li = document.createElement("li");
+    li.className = "list-group-item detail-view__list-item";
+    const p = document.createElement("p");
+    p.className = "mb-1";
+    const i = document.createElement("i");
+    i.className = `fa-solid ${icono} tc-primary`;
+    p.append(clima, " ", i);
+    const span = document.createElement("span");
+    span.textContent = `${cantDias} días`;
+    li.append(p, span);
+    ulDiasPorClima.append(li);
+  });
+
+  divDatosContainer4.append(
+    h5SubtituloResumenSemana,
+    pResumenCLimaDetalle,
+    h4SubtituloEstadisticas,
+    ulEstaditicasDetalle,
+    h4SubtituloCantidadDias,
+    ulDiasPorClima,
+  );
+
+  //==============================================
+  const ulPronosticoDetalle = document.querySelector("#pronostico-detalle");
+  ulPronosticoDetalle.append(...renderizarPronostico(regionData));
+}
+
+/**
+ * Función para cambiar la vista a Detalle
+ * @param {Number} id
+ */
+function mostrarDetalle(id) {
+  renderizarDetalle(id);
+  let forecastListItem = document.querySelectorAll(".forecast__list-item");
+
+  heroSection.classList.add("d-none");
+  vistaHome.classList.add("d-none");
+  vistaDetalle.classList.remove("d-none");
+  body.classList.replace("body--home", "body--detail");
+  forecastListItem.forEach((item) =>
+    item.classList.replace(
+      "forecast__list-item--home",
+      "forecast__list-item--detail",
+    ),
+  );
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
+
+/**
+ * Función para cambiar la vista a Home
+ */
+function mostrarHome() {
+  let forecastListItem = document.querySelectorAll(".forecast__list-item");
+
+  heroSection.classList.remove("d-none");
+  vistaHome.classList.remove("d-none");
+  vistaDetalle.classList.add("d-none");
+  body.classList.replace("body--detail", "body--home");
+  forecastListItem.forEach((item) =>
+    item.classList.replace(
+      "forecast__list-item--detail",
+      "forecast__list-item--home",
+    ),
+  );
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
+
 // evento buscador
 formularioBusqueda.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -282,6 +525,8 @@ formularioBusqueda.addEventListener("submit", (e) => {
   } else {
     inputBusqueda.classList.remove("nav-weather__input--error");
   }
+
+  mostrarHome();
 
   vistaHome.scrollIntoView({
     behavior: "smooth",
@@ -297,6 +542,11 @@ inputBusqueda.addEventListener("input", (e) => {
     regionesContainer.textContent = "";
     renderizarCards(regionesChile);
   }
+});
+
+// evento para volver al Home
+botonesHome.forEach((btn) => {
+  btn.addEventListener("click", mostrarHome);
 });
 
 renderizarHero();

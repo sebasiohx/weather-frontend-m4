@@ -88,9 +88,7 @@
                   <div class="row g-2">
                     <div class="col-12">
                       <div class="hero-card__inner-card p-2 align-items-start">
-                        <!-- h2Ciudad -->
                         <h2 id="nombre-ciudad-hero" class="fw-bolder mb-1"></h2>
-                        <!-- h2Region -->
                         <h2
                           id="nombre-region-hero"
                           class="hero-card__region"
@@ -101,12 +99,10 @@
                     <div class="col-6 col-lg-5">
                       <div class="hero-card__inner-card">
                         <div class="ms-1">
-                          <!-- h1Temperatura -->
                           <h1
                             id="cifra-temperatura-hero"
                             class="display-2 fw-bold lh-1 mb-2 tc-accent"
                           ></h1>
-                          <!-- h3MinMax -->
                           <h3
                             id="min-max-temperatura-hero"
                             class="ms-1 text-body-emphasis"
@@ -116,13 +112,11 @@
                     </div>
 
                     <div class="col-6 col-lg-4">
-                      <!-- divEstadoClimatico -->
                       <div
                         id="card-estado-climatico"
                         class="hero-card__inner-card gap-3 h-100"
                       ></div>
                     </div>
-                    <!-- divColFecha -->
                     <div
                       id="container-fecha-hero"
                       class="col-12 text-center text-md-start"
@@ -136,7 +130,6 @@
                   <div class="card p-3 mb-3 hero-card">
                     <h5 class="mb-0">Pronóstico siguientes 7 días</h5>
                   </div>
-                  <!-- divCardPronostico -->
                   <div id="card-pronostico" class="card p-4 hero-card"></div>
                 </article>
               </div>
@@ -168,121 +161,27 @@
               <article id="detalle-container">
                 <div class="detail-header mb-5">
                   <div class="row">
-                    <div class="col-md-6">
-                      <h2 class="fw-bolder mb-1">
-                        <i class="fa-solid fa-location-dot tc-primary"></i>
-                        Santiago
-                      </h2>
-                      <h5 class="detail-view__region">
-                        Región Metropolitana de Santiago
-                      </h5>
-                      <p class="detail-view__description mb-4">
-                        Santiago es la capital de Chile y una de las metrópolis
-                        más modernas e importantes de Latinoamérica, con más de
-                        siete millones de habitantes. Rodeada por la majestuosa
-                        Cordillera de los Andes al oriente y la Cordillera de la
-                        Costa al poniente, ofrece una postal única de montañas
-                        nevadas en días despejados. La ciudad concentra los
-                        principales centros culturales, financieros y
-                        gubernamentales del país, conviviendo barrios históricos
-                        con rascacielos ultramodernos.
-                      </p>
-                    </div>
-                    <div class="col-md-6">
-                      <img
-                        src="./assets/img/santiago.jpg"
-                        class="detail-view__image object-fit-cover rounded"
-                        alt="Santiago"
-                      />
-                    </div>
+                    <!-- divDatosContainer1 -->
+                    <div id="datos-container-1" class="col-md-6"></div>
+                    <!-- imgCiudadDetalle -->
+                    <div id="img-ciudad-detalle" class="col-md-6"></div>
                   </div>
                 </div>
                 <div class="detalle-data">
                   <div class="row">
                     <div class="col-12 col-md-6">
                       <div class="row mb-3">
-                        <div class="col-md-6">
-                          <p class="detail-view__subtitle mb-2">
-                            Temperatura actual
-                          </p>
-                          <h3
-                            class="display-3 fw-bold lh-1 mb-2 d-flex justify-content-between align-items-baseline"
-                          >
-                            <span class="tc-primary">28°</span>
-                            <i class="fa-solid fa-sun display-5 mt-3"></i>
-                          </h3>
-                          <div
-                            class="ms-1 mb-0 d-flex align-items-baseline justify-content-between"
-                          >
-                            <p>
-                              <i class="fa-solid fa-arrow-down"></i>
-                              9° /
-                              <i class="fa-solid fa-arrow-up"></i>
-                              33°
-                            </p>
-                            <p>
-                              <span class="badge bgc-primary tc-accent"
-                                >soleado</span
-                              >
-                            </p>
-                          </div>
-                        </div>
+                        <!-- divDatosContainer2 -->
+                        <div id="datos-container-2" class="col-md-6"></div>
+                        <!-- divDatosContainer3 -->
                         <div
+                          id="datos-container-3"
                           class="col-md-6 d-flex flex-row flex-md-column justify-content-between"
-                        >
-                          <div class="detalle-viento">
-                            <h5><i class="fa-solid fa-wind"></i> Viento</h5>
-                            <p>20 km/h</p>
-                          </div>
-                          <div class="detalle-humedad">
-                            <h5><i class="fa-solid fa-water"></i> Humedad</h5>
-                            <p>42%</p>
-                          </div>
-                        </div>
+                        ></div>
                       </div>
                       <div class="row">
-                        <div class="col-12">
-                          <!-- Un mensaje de resumen generado a partir de esos datos. -->
-                          <h5 class="detail-view__subtitle">
-                            Resumen del clima
-                          </h5>
-                          <p>Semana fría mayormente con lluvias.</p>
-                          <!-- Mínimo, máximo y promedio de temperatura de la semana. -->
-                          <h4 class="detail-view__subtitle">
-                            Estadísticas de la semana
-                          </h4>
-                          <ul class="list-group list-group-horizontal mb-3">
-                            <li class="list-group-item detail-view__list-item">
-                              Temp. mínima: <span>22°</span>
-                            </li>
-                            <li class="list-group-item detail-view__list-item">
-                              Temp. máxima: 32°
-                            </li>
-                            <li class="list-group-item detail-view__list-item">
-                              Temp. promedio: 20°
-                            </li>
-                          </ul>
-                          <!-- Cantidad de días por tipo de clima -->
-                          <h4 class="detail-view__subtitle">
-                            Cantidad de días por tipo de clima
-                          </h4>
-                          <ul class="list-group list-group-horizontal mb-4">
-                            <li class="list-group-item detail-view__list-item">
-                              <p class="mb-1">
-                                Soleado
-                                <i class="fa-solid fa-sun tc-primary"></i>
-                              </p>
-                              <span>3 días</span>
-                            </li>
-                            <li class="list-group-item detail-view__list-item">
-                              <p class="mb-1">
-                                Soleado
-                                <i class="fa-solid fa-sun tc-primary"></i>
-                              </p>
-                              <span>2 días</span>
-                            </li>
-                          </ul>
-                        </div>
+                        <!-- divDatosContainer4  PENDIENTE -->
+                        <div id="datos-container-4" class="col-12"></div>
                       </div>
                     </div>
 
@@ -290,136 +189,11 @@
                       <p class="detail-view__subtitle">
                         Pronóstico siguientes 7 días
                       </p>
+                      <!-- ulPronosticoDetalle -->
                       <ul
                         id="pronostico-detalle"
                         class="list-group forecast mb-5"
-                      >
-                        <li
-                          class="forecast__list-item forecast__list-item--detail list-group-item"
-                        >
-                          <p class="forecast__day mb-0">jue 30</p>
-                          <div class="forecast__climates">
-                            <i
-                              class="fa-solid fa-sun tc-primary"
-                              title="soleado"
-                            ></i>
-                            /
-                            <i
-                              class="fa-solid fa-moon tc-primary"
-                              title="noche despejada"
-                            ></i>
-                          </div>
-                          <p class="forecast__temperatures mb-0">10°/31°</p>
-                        </li>
-
-                        <li
-                          class="forecast__list-item forecast__list-item--detail list-group-item"
-                        >
-                          <p class="forecast__day mb-0">vie 1</p>
-                          <div class="forecast__climates">
-                            <i
-                              class="fa-solid fa-cloud-rain tc-primary"
-                              title="chubascos"
-                            ></i>
-                            /
-                            <i
-                              class="fa-solid fa-cloud-moon-rain tc-primary"
-                              title="noche lluviosa"
-                            ></i>
-                          </div>
-                          <p class="forecast__temperatures mb-0">7°/22°</p>
-                        </li>
-
-                        <li
-                          class="forecast__list-item forecast__list-item--detail list-group-item"
-                        >
-                          <p class="forecast__day mb-0">sab 2</p>
-                          <div class="forecast__climates">
-                            <i
-                              class="fa-solid fa-cloud tc-primary"
-                              title="nublado"
-                            ></i>
-                            /
-                            <i
-                              class="fa-solid fa-cloud-moon tc-primary"
-                              title="noche nublada"
-                            ></i>
-                          </div>
-                          <p class="forecast__temperatures mb-0">8°/25°</p>
-                        </li>
-
-                        <li
-                          class="forecast__list-item forecast__list-item--detail list-group-item"
-                        >
-                          <p class="forecast__day mb-0">dom 3</p>
-                          <div class="forecast__climates">
-                            <i
-                              class="fa-solid fa-sun tc-primary"
-                              title="soleado"
-                            ></i>
-                            /
-                            <i
-                              class="fa-solid fa-moon tc-primary"
-                              title="noche despejada"
-                            ></i>
-                          </div>
-                          <p class="forecast__temperatures mb-0">9°/30°</p>
-                        </li>
-
-                        <li
-                          class="forecast__list-item forecast__list-item--detail list-group-item"
-                        >
-                          <p class="forecast__day mb-0">lun 4</p>
-                          <div class="forecast__climates">
-                            <i
-                              class="fa-solid fa-sun tc-primary"
-                              title="soleado"
-                            ></i>
-                            /
-                            <i
-                              class="fa-solid fa-moon tc-primary"
-                              title="noche despejada"
-                            ></i>
-                          </div>
-                          <p class="forecast__temperatures mb-0">9°/32°</p>
-                        </li>
-
-                        <li
-                          class="forecast__list-item forecast__list-item--detail list-group-item"
-                        >
-                          <p class="forecast__day mb-0">mar 5</p>
-                          <div class="forecast__climates">
-                            <i
-                              class="fa-solid fa-sun tc-primary"
-                              title="soleado"
-                            ></i>
-                            /
-                            <i
-                              class="fa-solid fa-moon tc-primary"
-                              title="noche despejada"
-                            ></i>
-                          </div>
-                          <p class="forecast__temperatures mb-0">10°/33°</p>
-                        </li>
-
-                        <li
-                          class="forecast__list-item forecast__list-item--detail list-group-item"
-                        >
-                          <p class="forecast__day mb-0">mie 6</p>
-                          <div class="forecast__climates">
-                            <i
-                              class="fa-solid fa-cloud tc-primary"
-                              title="nublado"
-                            ></i>
-                            /
-                            <i
-                              class="fa-solid fa-cloud-moon tc-primary"
-                              title="noche nublada"
-                            ></i>
-                          </div>
-                          <p class="forecast__temperatures mb-0">9°/28°</p>
-                        </li>
-                      </ul>
+                      ></ul>
                     </div>
                   </div>
                 </div>
