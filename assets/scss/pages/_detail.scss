@@ -22,10 +22,19 @@
     @include text-lead;
   }
 
+  &__list-item {
+    background-color: transparent;
+    color: $color-text-2;
+    text-align: start;
+  }
+
   @include mobile {
     &__image {
       height: 200px;
       width: 100%;
+    }
+    &__list-item {
+      text-align: center;
     }
   }
 }
