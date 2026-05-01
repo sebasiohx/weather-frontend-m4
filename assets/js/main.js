@@ -337,30 +337,29 @@ function renderizarDetalle(id) {
   );
 
   const crearFraseResumen = (climaPromedio, climaRepetido) => {
-    let nivelClima = "";
-    if (climaPromedio <= 5) {
-      nivelClima = "muy fría";
-    } else if (climaPromedio >= 6 && climaPromedio <= 17) {
-      nivelClima = "fría";
-    } else if (climaPromedio >= 18 && climaPromedio <= 24) {
-      nivelClima = "templada";
-    } else {
-      nivelClima = "calurosa";
-    }
+    const nivelesClima = {
+      muyFria: { max: 8, texto: "muy fría" },
+      fria: { max: 17, texto: "fría" },
+      templada: { max: 24, texto: "templada" },
+      calurosa: { max: 50, texto: "calurosa" },
+    };
 
-    let { clima, icono: iconoClase } = climaRepetido;
-    textoClima = "";
-    if (clima === "soleado") {
-      textoClima = "soleada";
-    } else if (clima === "nublado") {
-      textoClima = "nublada";
-    } else if (clima === "lluvioso") {
-      textoClima = "lluviosa";
-    } else if (clima === "granizo") {
-      textoClima = "con granizo";
-    } else if (clima === "tormena") {
-      textoClima = "con tormentas";
-    }
+    // destructuring del elemento 'texto' que devuelve el objeto nivelesClima transformado en array
+    const { texto: nivelClima } = Object.values(nivelesClima).find(
+      ({ max }) => climaPromedio <= max,
+    );
+
+    // Objeto lookup
+    const textosClima = {
+      soleado: "soleada",
+      nublado: "nublada",
+      lluvioso: "lluviosa",
+      granizo: "con granizo",
+      tormenta: "con tormentas",
+    };
+
+    const { clima, icono: iconoClase } = climaRepetido;
+    const textoClima = textosClima[clima] ?? "variable";
 
     const elementoIcono = document.createElement("i");
     elementoIcono.className = `fa-solid ${iconoClase} tc-primary`;
