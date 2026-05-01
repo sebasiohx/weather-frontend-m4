@@ -413,17 +413,32 @@ function renderizarDetalle(id) {
   h4SubtituloEstadisticas.className = "detail-view__subtitle";
   h4SubtituloEstadisticas.textContent = "Estadísticas de la semana";
 
-  const ulEstaditicasDetalle = document.createElement("ul"); //PENDIENTE
+  const ulEstaditicasDetalle = document.createElement("ul");
   ulEstaditicasDetalle.className = "list-group list-group-horizontal mb-3";
+  const listaTempMin = regionData.pronosticoSemanal.map((dia) => dia.tempMin);
+  const listaTempMax = regionData.pronosticoSemanal.map((dia) => dia.tempMax);
+  const listaMinMax = [...listaTempMin, ...listaTempMax];
+  const menorTempMin = Math.min(...listaTempMin);
+  const mayorTempMax = Math.max(...listaTempMax);
+  const sumaTemperaturas = listaMinMax.reduce(
+    (acumulador, numActual) => acumulador + numActual,
+    0,
+  );
+  const calcularPromedio = (sumaTotal, cantidadElementos) =>
+    sumaTotal / cantidadElementos;
+  const promedioTemp = Math.floor(
+    calcularPromedio(sumaTemperaturas, listaMinMax.length),
+  );
   const temperaturasEstadisticas = [
-    { etiqueta: "Temp. mínima", valor: 22 },
-    { etiqueta: "Temp. máxima", valor: 32 },
-    { etiqueta: "Temp. promedio", valor: 20 },
+    { etiqueta: "Temp. mínima", valor: menorTempMin },
+    { etiqueta: "Temp. máxima", valor: mayorTempMax },
+    { etiqueta: "Temp. promedio", valor: promedioTemp },
   ];
   temperaturasEstadisticas.forEach(({ etiqueta, valor }) => {
+    let br = document.createElement("br");
     const li = document.createElement("li");
     li.className = "list-group-item detail-view__list-item";
-    li.textContent = `${etiqueta}: ${valor}°`;
+    li.append(`${etiqueta}:`, br, `${valor}°`);
     ulEstaditicasDetalle.append(li);
   });
 
