@@ -26,6 +26,15 @@ const nombreDiaHoy = diasSemana[hoy.getDay()];
 
 /* Funciones */
 /**
+ * Función para poner en mayuscula la primera letra de un texto
+ * @param {string} texto
+ */
+function capitalizarTexto(texto) {
+  if (!texto) return "";
+  return texto[0].toUpperCase() + texto.slice(1);
+}
+
+/**
  * Función para imprimir la fecha con un formato legible
  * @param {Date} fecha
  */
@@ -39,8 +48,7 @@ function imprimirFecha(fecha) {
     })
     .replace(",", "");
 
-  // para imprimir la fecha con la primera letra en mayusculas
-  return fechaLiteral[0].toUpperCase() + fechaLiteral.slice(1);
+  return capitalizarTexto(fechaLiteral);
 }
 
 /**
@@ -486,7 +494,7 @@ function renderizarDetalle(id) {
   const pResumenCLimaDetalle = document.createElement("p");
   pResumenCLimaDetalle.append(
     ...crearFraseResumen(promedioTempMax, climaMasRepetido),
-  ); //PENDIENTE
+  );
 
   const h4SubtituloEstadisticas = document.createElement("h4");
   h4SubtituloEstadisticas.className = "detail-view__subtitle";
@@ -526,7 +534,7 @@ function renderizarDetalle(id) {
     p.className = "mb-1";
     const i = document.createElement("i");
     i.className = `fa-solid ${icono} tc-primary`;
-    p.append(clima, " ", i);
+    p.append(capitalizarTexto(clima), " ", i);
     const span = document.createElement("span");
     span.textContent = `${cantDias} días`;
     li.append(p, span);
