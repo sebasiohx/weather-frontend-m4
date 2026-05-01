@@ -282,6 +282,7 @@ function buscarCiudad() {
  */
 function renderizarDetalle(id) {
   const regionData = regionesChile.find((region) => region.id === id);
+  const { pronosticoSemanal } = regionData;
 
   if (!regionData) {
     const tituloNoData = document.createElement("h2");
@@ -289,6 +290,83 @@ function renderizarDetalle(id) {
     detalleContainer.append(tituloNoData);
     return;
   }
+
+  const listaTempMin = pronosticoSemanal.map((dia) => dia.tempMin);
+  const listaTempMax = pronosticoSemanal.map((dia) => dia.tempMax);
+  const listaMinMax = [...listaTempMin, ...listaTempMax];
+  const menorTempMin = Math.min(...listaTempMin);
+  const mayorTempMax = Math.max(...listaTempMax);
+  const sumaTemperaturas = listaMinMax.reduce(
+    (acumulador, numActual) => acumulador + numActual,
+    0,
+  );
+  const calcularPromedio = (sumaTotal, cantidadElementos) =>
+    sumaTotal / cantidadElementos;
+  const promedioTemp = Math.floor(
+    calcularPromedio(sumaTemperaturas, listaMinMax.length),
+  );
+
+  const conteoTemporalClima = pronosticoSemanal.reduce((acumulador, dia) => {
+    const iconoClima = dia.climaDia.icono;
+    const nombreClima = dia.climaDia.texto;
+
+    if (!acumulador[nombreClima]) {
+      acumulador[nombreClima] = {
+        clima: nombreClima,
+        icono: iconoClima,
+        cantDias: 0,
+      };
+    }
+    acumulador[nombreClima].cantDias += 1;
+
+    return acumulador;
+  }, {});
+
+  const diasPorClimas = Object.values(conteoTemporalClima);
+
+  const climaMasRepetido = diasPorClimas.reduce(
+    (max, climaActual) => {
+      return climaActual.cantDias > max.cantDias ? climaActual : max;
+    },
+    { clima: null, icono: null, cantDias: 0 },
+  );
+
+  const sumaTempMax = listaTempMax.reduce((acc, num) => acc + num, 0);
+  const promedioTempMax = Math.ceil(
+    calcularPromedio(sumaTempMax, listaTempMax.length),
+  );
+
+  const crearFraseResumen = (climaPromedio, climaRepetido) => {
+    let nivelClima = "";
+    if (climaPromedio <= 5) {
+      nivelClima = "muy fría";
+    } else if (climaPromedio >= 6 && climaPromedio <= 17) {
+      nivelClima = "fría";
+    } else if (climaPromedio >= 18 && climaPromedio <= 24) {
+      nivelClima = "templada";
+    } else {
+      nivelClima = "calurosa";
+    }
+
+    let { clima, icono: iconoClase } = climaRepetido;
+    textoClima = "";
+    if (clima === "soleado") {
+      textoClima = "soleada";
+    } else if (clima === "nublado") {
+      textoClima = "nublada";
+    } else if (clima === "lluvioso") {
+      textoClima = "lluviosa";
+    } else if (clima === "granizo") {
+      textoClima = "con granizo";
+    } else if (clima === "tormena") {
+      textoClima = "con tormentas";
+    }
+
+    const elementoIcono = document.createElement("i");
+    elementoIcono.className = `fa-solid ${iconoClase} tc-primary`;
+
+    return [`Semana ${nivelClima} mayormente ${textoClima} `, elementoIcono];
+  };
 
   // Limpiar todos los contenedores antes de renderizar
   document.querySelector("#datos-container-1").textContent = "";
@@ -407,7 +485,9 @@ function renderizarDetalle(id) {
   h5SubtituloResumenSemana.textContent = "Resumen del clima semanal";
 
   const pResumenCLimaDetalle = document.createElement("p");
-  pResumenCLimaDetalle.textContent = `Semana fría mayormente con lluvias.`; //PENDIENTE
+  pResumenCLimaDetalle.append(
+    ...crearFraseResumen(promedioTempMax, climaMasRepetido),
+  ); //PENDIENTE
 
   const h4SubtituloEstadisticas = document.createElement("h4");
   h4SubtituloEstadisticas.className = "detail-view__subtitle";
@@ -415,20 +495,7 @@ function renderizarDetalle(id) {
 
   const ulEstaditicasDetalle = document.createElement("ul");
   ulEstaditicasDetalle.className = "list-group list-group-horizontal mb-3";
-  const listaTempMin = regionData.pronosticoSemanal.map((dia) => dia.tempMin);
-  const listaTempMax = regionData.pronosticoSemanal.map((dia) => dia.tempMax);
-  const listaMinMax = [...listaTempMin, ...listaTempMax];
-  const menorTempMin = Math.min(...listaTempMin);
-  const mayorTempMax = Math.max(...listaTempMax);
-  const sumaTemperaturas = listaMinMax.reduce(
-    (acumulador, numActual) => acumulador + numActual,
-    0,
-  );
-  const calcularPromedio = (sumaTotal, cantidadElementos) =>
-    sumaTotal / cantidadElementos;
-  const promedioTemp = Math.floor(
-    calcularPromedio(sumaTemperaturas, listaMinMax.length),
-  );
+  // menorTempMin / mayorTempMax / promedioTemp
   const temperaturasEstadisticas = [
     { etiqueta: "Temp. mínima", valor: menorTempMin },
     { etiqueta: "Temp. máxima", valor: mayorTempMax },
@@ -446,13 +513,13 @@ function renderizarDetalle(id) {
   h4SubtituloCantidadDias.className = "detail-view__subtitle";
   h4SubtituloCantidadDias.textContent = "Cantidad de días por tipo de clima";
 
-  const ulDiasPorClima = document.createElement("ul"); //PENDIENTE
+  const ulDiasPorClima = document.createElement("ul");
   ulDiasPorClima.className = "list-group list-group-horizontal mb-4";
-  const diasPorClimas = [
-    { clima: "Soleado", icono: "fa-sun", cantDias: 3 },
-    { clima: "Nublado", icono: "fa-sun", cantDias: 2 },
-    { clima: "Lluvioso", icono: "fa-sun", cantDias: 1 },
-  ];
+  /* const diasPorClimas = [
+    { clima: "soleado", icono: "fa-sun", cantDias: 3 },
+    { clima: "nublado", icono: "fa-sun", cantDias: 2 },
+    { clima: "lluvioso", icono: "fa-sun", cantDias: 1 },
+  ]; */
   diasPorClimas.forEach(({ clima, icono, cantDias }) => {
     const li = document.createElement("li");
     li.className = "list-group-item detail-view__list-item";

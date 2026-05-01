@@ -8,18 +8,14 @@
 
 /* lista climas */
 const climas = {
-  soleado: { idClima: 0, texto: "soleado", icono: "fa-sun" },
-  nublado: { idClima: 1, texto: "nublado", icono: "fa-cloud" },
-  lluvia: { idClima: 2, texto: "lluvioso", icono: "fa-cloud-rain" },
-  granizo: { idClima: 3, texto: "granizo", icono: "fa-cloud-meatball" },
-  tormenta: { idClima: 4, texto: "tormenta", icono: "fa-cloud-bolt" },
-  nocheDespejada: { idClima: 5, texto: "noche despejada", icono: "fa-moon" },
-  nocheNublada: { idClima: 6, texto: "noche nublada", icono: "fa-cloud-moon" },
-  nocheLluvia: {
-    idClima: 7,
-    texto: "noche lluviosa",
-    icono: "fa-cloud-moon-rain",
-  },
+  soleado: { texto: "soleado", icono: "fa-sun" },
+  nublado: { texto: "nublado", icono: "fa-cloud" },
+  lluvia: { texto: "lluvioso", icono: "fa-cloud-rain" },
+  granizo: { texto: "granizo", icono: "fa-cloud-meatball" },
+  tormenta: { texto: "tormenta", icono: "fa-cloud-bolt" },
+  nocheDespejada: { texto: "noche despejada", icono: "fa-moon" },
+  nocheNublada: { texto: "noche nublada", icono: "fa-cloud-moon" },
+  nocheLluvia: { texto: "noche lluviosa", icono: "fa-cloud-moon-rain" },
 };
 
 /* ── 00 ── Región de Arica y Parinacota */
