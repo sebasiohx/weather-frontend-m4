@@ -633,6 +633,14 @@ inputBusqueda.addEventListener("input", (e) => {
   }
 });
 
+regionesContainer.addEventListener("click", (e) => {
+  const card = e.target.closest(".regions-card");
+  // guardian
+  if (!card) return;
+  const idRegion = +card.dataset.id;
+  mostrarDetalle(idRegion);
+});
+
 // evento para volver al Home
 botonesHome.forEach((btn) => {
   btn.addEventListener("click", mostrarHome);
