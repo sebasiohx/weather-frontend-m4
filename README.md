@@ -1,4 +1,4 @@
-# MeteoChile (prototipo de app del clima de Chile)
+# MeteoChile (prototipo de app del clima de Chile) v4.0
 
 🔗[https://github.com/sebasiohx/weather-frontend-m4](https://github.com/sebasiohx/weather-frontend-m4)
 
