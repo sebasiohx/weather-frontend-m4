@@ -310,6 +310,7 @@ function renderizarDetalle(id) {
   );
   const calcularPromedio = (sumaTotal, cantidadElementos) =>
     sumaTotal / cantidadElementos;
+
   const promedioTemp = Math.floor(
     calcularPromedio(sumaTemperaturas, listaMinMax.length),
   );
@@ -345,15 +346,15 @@ function renderizarDetalle(id) {
   );
 
   const crearFraseResumen = (climaPromedio, climaRepetido) => {
-    const nivelesClima = {
+    const nivelesTemperatura = {
       muyFria: { max: 8, texto: "muy fría" },
       fria: { max: 17, texto: "fría" },
       templada: { max: 24, texto: "templada" },
       calurosa: { max: 50, texto: "calurosa" },
     };
 
-    // destructuring del elemento 'texto' que devuelve el objeto nivelesClima transformado en array
-    const { texto: nivelClima } = Object.values(nivelesClima).find(
+    // destructuring del elemento 'texto' que devuelve el objeto nivelesTemperatura transformado en array
+    const { texto: nivelClima } = Object.values(nivelesTemperatura).find(
       ({ max }) => climaPromedio <= max,
     );
 
